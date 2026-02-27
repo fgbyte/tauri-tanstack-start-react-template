@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { invoke } from "@tauri-apps/api/core";
 import { useCallback, useState } from "react";
+import { FileIcon, GlobeIcon, TanstackLogo, WindowIcon } from "../assets/icons";
 import { RoundedButton } from "../components/RoundedButton";
 
 export const Home: React.FC = () => {
@@ -10,6 +11,7 @@ export const Home: React.FC = () => {
 
   const increment = () => {
     setCount(count + 1);
+    console.log("Incremented count to", count + 1);
   };
 
   const greet = useCallback((): void => {
@@ -23,16 +25,10 @@ export const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-(family-name:--font-inter-sans)">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+    <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 sm:grid sm:grid-rows-[20px_1fr_20px] sm:items-center sm:justify-items-center font-(family-name:--font-inter-sans)">
+      <main className="flex flex-col gap-8 sm:row-start-2 items-center sm:items-start">
         <div className="flex flex-row gap-2 items-center">
-          <img
-            className="dark:invert"
-            src="/tanstack.svg"
-            alt="TanStack logo"
-            width={180}
-            height={38}
-          />
+          <TanstackLogo className="dark:invert" width={180} height={38} />
           <span className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-teal-500 to-cyan-500">
             Start
           </span>
@@ -48,32 +44,24 @@ export const Home: React.FC = () => {
           </li>
           <li>Save and see your changes instantly.</li>
         </ol>
-        <div className="flex flex-col gap-2 items-start">
+        <div className="flex flex-col gap-2 text-center px-8 w-full">
           <RoundedButton onClick={greet} title='Call "greet" from Rust' />
-          <p className="wrap-break-word w-md">
-            {greeted ?? "Click the button to call the Rust function"}
-          </p>
+          <p>{greeted ?? "Click the button to call the Rust function"}</p>
           <RoundedButton
             onClick={increment}
             title="Increment counter from web"
           />
-          <p className="wrap-break-word w-md">Count: {count}</p>
+          <p>Count: {count}</p>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+      <footer className="flex gap-6 flex-wrap items-center justify-center sm:row-start-3">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://tanstack.com/start/latest/docs/framework/react/overview"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
+          <FileIcon />
           Learn
         </a>
         <a
@@ -82,13 +70,7 @@ export const Home: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
+          <WindowIcon />
           Examples
         </a>
         <a
@@ -97,13 +79,7 @@ export const Home: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
+          <GlobeIcon />
           Go to tanstack.com/start →
         </a>
       </footer>

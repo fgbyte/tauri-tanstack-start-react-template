@@ -1,9 +1,9 @@
-import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
+import svgr from "vite-plugin-svgr";
 import viteTsConfigPaths from "vite-tsconfig-paths";
 
 type TanStackStartInputConfig = NonNullable<
@@ -59,7 +59,7 @@ export default defineConfig(async () => ({
     viteTsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
-    tailwindcss(),
+    // TailwindCSS is now handled by PostCSS (postcss.config.mjs)
     tanstackStart({
       spa: (!useSsrPrerenderMode
         ? spaWithPrerenderOptions
@@ -69,6 +69,7 @@ export default defineConfig(async () => ({
         : undefined) satisfies RegularPrerenderOptions | undefined,
     }),
     viteReact(),
+    svgr(),
   ],
 
   // Prevent Vite from obscuring rust errors
