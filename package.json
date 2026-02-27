@@ -4,8 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev --port 3000",
-    "dev:android": "tauri android dev",
-    "build:vite": "vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "tauri": "tauri",
@@ -13,7 +12,9 @@
     "lint": "biome check",
     "fix": "biome check --write",
     "dev:tauri": "tauri dev",
-    "build": "tauri build"
+    "build:tauri": "tauri build",
+    "dev:android": "tauri android dev",
+    "build:android": "tauri android build"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",

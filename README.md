@@ -6,7 +6,7 @@ This is a [Tauri 2.0](https://v2.tauri.app/) project template using [TanStack St
 bootstrapped by combining [`create @tanstack/start`](https://tanstack.com/start/latest/docs/framework/react/quick-start)
 and [`create tauri-app`](https://v2.tauri.app/start/create-project/).
 
-This template uses [`pnpm`](https://pnpm.io/) as the Node.js dependency
+This template uses [`bun`](https://bun.sh) as the Node.js dependency
 manager, and uses [TanStack Router](https://tanstack.com/router/latest) with type-safe file-based routing.
 
 ## Template Features
@@ -44,7 +44,7 @@ After cloning for the first time, change your app identifier inside
 To develop and run the frontend in a Tauri window:
 
 ```shell
-pnpm tauri dev
+bun dev:tauri
 ```
 
 This will load the TanStack Start frontend directly in a Tauri webview window, in addition to
@@ -57,13 +57,13 @@ Windows) to open the web developer console from the Tauri window.
 To build the TanStack Start frontend and the Tauri application for release:
 
 ```shell
-pnpm tauri build
+bun build:tauri
 ```
 
 ### Running tests
 
 ```shell
-pnpm test
+bun test
 ```
 
 ### Source structure
@@ -89,7 +89,7 @@ Use the `Link` component from `@tanstack/react-router` for SPA navigation:
 ```tsx
 import { Link } from "@tanstack/react-router";
 
-<Link to="/about">About</Link>
+<Link to="/about">About</Link>;
 ```
 
 ### Using a Layout
@@ -120,7 +120,7 @@ The template supports two prerendering modes, controlled by the `USE_SSR_PREREND
 To enable SSR prerendering instead, set the environment variable before building:
 
 ```shell
-USE_SSR_PRERENDER_MODE=true pnpm tauri build
+USE_SSR_PRERENDER_MODE=true bun build:tauri
 ```
 
 For most Tauri apps, the default SPA mode is sufficient and simpler. Use the SSR prerendering mode if you also expect your app to be deployed as a website to allow for improved SEO on a per-route basis.
