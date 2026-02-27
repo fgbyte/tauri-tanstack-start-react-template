@@ -6,7 +6,7 @@
   "build": {
     "beforeDevCommand": "bun dev",
     "devUrl": "http://localhost:3000",
-    "beforeBuildCommand": "bun build:vite",
+    "beforeBuildCommand": "bun build",
     "frontendDist": "../.output/public"
   },
   "app": {
@@ -14,7 +14,8 @@
       {
         "title": "tauri-tanstack-start-react-template",
         "width": 800,
-        "height": 600
+        "height": 600,
+        "devtools": true
       }
     ],
     "security": {
