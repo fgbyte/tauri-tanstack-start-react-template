@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { invoke } from "@tauri-apps/api/core";
+import { Activity } from "lucide-react";
 import { useCallback, useState } from "react";
-import { FileIcon, GlobeIcon, TanstackLogo, WindowIcon } from "../assets/icons";
+import { FileIcon, GlobeIcon, TanstackLogo } from "../assets/icons";
 import { RoundedButton } from "../components/RoundedButton";
 
 export const Home: React.FC = () => {
@@ -70,7 +71,7 @@ export const Home: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <WindowIcon />
+          <Activity />
           Examples
         </a>
         <a
