@@ -31,3 +31,4 @@ todos.json
 *.njsproj
 *.sln
 *.sw?
+*.jks

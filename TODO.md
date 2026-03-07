@@ -1,0 +1,2 @@
+- [x] firma de android
+- [ ] ver por que no se ve nada en android ni en emulator ni en build
