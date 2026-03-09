@@ -4,10 +4,23 @@ import {
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { M3 } from "tauri-plugin-m3";
 
 import appCss from "../styles.css?url";
 
 export const RootComponent: React.FC = () => {
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateStatusBar = (e: MediaQueryListEvent | MediaQueryList) => {
+      M3.setBarColor(e.matches ? "dark" : "light");
+    };
+
+    updateStatusBar(mediaQuery);
+    mediaQuery.addEventListener("change", updateStatusBar);
+    return () => mediaQuery.removeEventListener("change", updateStatusBar);
+  }, []);
+
   return (
     <html lang="en">
       <head>
