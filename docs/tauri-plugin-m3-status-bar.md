@@ -44,38 +44,65 @@ En `src-tauri/capabilities/default.json`:
 ```typescript
 import { M3 } from "tauri-plugin-m3";
 
+// Iconos claros para fondo oscuro
+await M3.setBarColor("dark");
+
 // Iconos oscuros para fondo claro
 await M3.setBarColor("light");
-
-// Iconos claros para fondo oscuro  
-await M3.setBarColor("dark");
 
 // Seguir tema del sistema
 await M3.setBarColor("system");
 ```
 
-### Integración con tema del sistema
+### Integración completa con tema del sistema + insets
 
 En `src/routes/__root.tsx` (TanStack Start):
 
 ```typescript
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { M3 } from "tauri-plugin-m3";
 
+interface InsetsScheme {
+  adjustedInsetTop?: number;
+  adjustedInsetBottom?: number;
+}
+
 export const RootComponent: React.FC = () => {
+  const [insetTop, setInsetTop] = useState(0);
+  const [insetBottom, setInsetBottom] = useState(0);
+
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const updateStatusBar = (e: MediaQueryListEvent | MediaQueryList) => {
-      M3.setBarColor(e.matches ? "dark" : "light");
+      // Dark mode → iconos claros (blancos)
+      // Light mode → iconos oscuros (negros)
+      M3.setBarColor(e.matches ? "light" : "dark");
+    };
+
+    const setupInsets = async () => {
+      const insets = await M3.getInsets();
+      if (insets && typeof insets === "object") {
+        const typedInsets = insets as InsetsScheme;
+        setInsetTop(typedInsets.adjustedInsetTop ?? 0);
+        setInsetBottom(typedInsets.adjustedInsetBottom ?? 0);
+      }
     };
 
     updateStatusBar(mediaQuery);
+    void setupInsets();
     mediaQuery.addEventListener("change", updateStatusBar);
     return () => mediaQuery.removeEventListener("change", updateStatusBar);
   }, []);
 
   return (
-    // ...
+    <body
+      style={{
+        paddingTop: insetTop,
+        paddingBottom: insetBottom,
+      } as React.CSSProperties}
+    >
+      {/* contenido */}
+    </body>
   );
 };
 ```
@@ -132,4 +159,75 @@ bun run tauri android build --debug
 
 - El método `setBarColor()` cambia tanto el color de fondo como el brillo de los iconos automáticamente
 - Funciona con Android 6.0+ (API 23+), pero el plugin requiere minSdk 26
-- En modo dark, los iconos son blancos; en modo light, son negros
+- **`"dark"`** → iconos claros (blancos), fondo oscuro
+- **`"light"`** → iconos oscuros (negros), fondo claro
+
+## Problema: Contenido cortado (edge-to-edge)
+
+Cuando usas `setBarColor()`, Android activa el modo edge-to-edge, lo que significa que el contenido se dibuja detrás de la barra de sistema. Esto puede hacer que el contenido quede oculto bajo la barra de estado.
+
+### Solución: Obtener insets y aplicar padding
+
+El plugin proporciona `getInsets()` para obtener los valores de compensación:
+
+```typescript
+import { useEffect, useState } from "react";
+import { M3 } from "tauri-plugin-m3";
+
+export const RootComponent: React.FC = () => {
+  const [insetTop, setInsetTop] = useState(0);
+  const [insetBottom, setInsetBottom] = useState(0);
+
+  useEffect(() => {
+    const setupInsets = async () => {
+      const insets = await M3.getInsets();
+      if (insets && typeof insets === "object") {
+        setInsetTop(insets.adjustedInsetTop ?? 0);
+        setInsetBottom(insets.adjustedInsetBottom ?? 0);
+      }
+    };
+
+    void setupInsets();
+  }, []);
+
+  return (
+    <body
+      style={{
+        paddingTop: insetTop,
+        paddingBottom: insetBottom,
+      } as React.CSSProperties}
+    >
+      {/* contenido */}
+    </body>
+  );
+};
+```
+
+### Alternativa: Usar variables CSS
+
+Si prefieres un enfoque más flexible, puedes inyectar los insets como variables CSS:
+
+```typescript
+const setupInsets = async () => {
+  const insets = await M3.getInsets();
+  if (insets && typeof insets === "object") {
+    document.documentElement.style.setProperty(
+      "--inset-top",
+      `${insets.adjustedInsetTop ?? 0}px`
+    );
+    document.documentElement.style.setProperty(
+      "--inset-bottom",
+      `${insets.adjustedInsetBottom ?? 0}px`
+    );
+  }
+};
+```
+
+Luego en tu CSS:
+
+```css
+.my-container {
+  padding-top: var(--inset-top, 0px);
+  padding-bottom: var(--inset-bottom, 0px);
+}
+```
