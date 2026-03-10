@@ -7,12 +7,12 @@
         "biome",
         "typescript-language-server",
         "codebook",
-        "tailwindcss-language-server",
-      ],
+        "tailwindcss-language-server"
+      ]
     },
     "TypeScript": {
       "formatter": "language_server",
-      "language_servers": ["biome", "typescript-language-server", "codebook"],
+      "language_servers": ["biome", "typescript-language-server", "codebook"]
     },
     "TSX": {
       "formatter": "language_server",
@@ -20,19 +20,19 @@
         "biome",
         "typescript-language-server",
         "codebook",
-        "tailwindcss-language-server",
-      ],
+        "tailwindcss-language-server"
+      ]
     },
     "CSS": {
       "formatter": "language_server",
-      "language_servers": ["biome", "codebook"],
-    },
+      "language_servers": ["biome", "codebook"]
+    }
   },
   "code_actions_on_format": {
     "source.fixAll.biome": true,
-    "source.organizeImports.biome": true,
+    "source.organizeImports.biome": true
   },
   "format_on_save": "on",
   "soft_wrap": "preferred_line_length",
-  "preferred_line_length": 80,
+  "preferred_line_length": 80
 }

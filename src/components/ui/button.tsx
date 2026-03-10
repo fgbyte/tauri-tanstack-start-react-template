@@ -61,4 +61,5 @@ function Button({
   );
 }
 
+// biome-ignore lint/style/useComponentExportOnlyModules: buttonVariants is a cva function, not a component - common shadcn pattern
 export { Button, buttonVariants };
