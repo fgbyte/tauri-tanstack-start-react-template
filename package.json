@@ -13,7 +13,7 @@
     "fix": "biome check --write",
     "dev:tauri": "tauri dev",
     "build:tauri": "tauri build",
-    "dev:android": "tauri android dev",
+    "dev:android": "VITE_SERVER_BASE_URL=http://192.168.217.93:3000 tauri android dev",
     "build:android": "tauri android build"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@tailwindcss/vite": "^4.2.1",
     "@tanstack/react-devtools": "^0.9.6",
+    "@tanstack/react-query": "^5.90.21",
     "@tanstack/react-router": "^1.161.3",
     "@tanstack/react-router-devtools": "^1.161.3",
     "@tanstack/react-router-ssr-query": "^1.161.3",

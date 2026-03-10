@@ -4,10 +4,13 @@ import {
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { M3 } from "tauri-plugin-m3";
 
 import appCss from "../styles.css?url";
+
+const queryClient = new QueryClient();
 
 interface InsetsScheme {
   adjustedInsetTop?: number;
@@ -53,7 +56,9 @@ export const RootComponent: React.FC = () => {
           } as React.CSSProperties
         }
       >
-        <Outlet />
+        <QueryClientProvider client={queryClient}>
+          <Outlet />
+        </QueryClientProvider>
         <Scripts />
       </body>
     </html>

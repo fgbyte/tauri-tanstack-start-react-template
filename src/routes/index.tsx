@@ -1,14 +1,26 @@
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { invoke } from "@tauri-apps/api/core";
 import { Activity } from "lucide-react";
 import { useCallback, useState } from "react";
 import { FileIcon, GlobeIcon, TanstackLogo } from "../assets/icons";
 import { RoundedButton } from "../components/RoundedButton";
+import { getUser } from "../serverFns/user";
 
 export const Home: React.FC = () => {
   const [greeted, setGreeted] = useState<string | null>(null);
 
   const [count, setCount] = useState(0);
+
+  const {
+    data: userData,
+    isLoading: loadingUser,
+    refetch,
+    isFetching,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
 
   const increment = () => {
     setCount(count + 1);
@@ -53,6 +65,20 @@ export const Home: React.FC = () => {
             title="Increment counter from web"
           />
           <p>Count: {count}</p>
+          <div className="mt-2 flex flex-col gap-2">
+            <p>Server Function:</p>
+            <RoundedButton
+              onClick={() => refetch()}
+              title={isFetching ? "Loading..." : "Refetch user"}
+            />
+            <p>
+              {loadingUser
+                ? "Loading..."
+                : userData
+                  ? `User: ${userData.name} (ID: ${userData.id})`
+                  : "No data"}
+            </p>
+          </div>
         </div>
       </main>
       <footer className="flex gap-6 flex-wrap items-center justify-center sm:row-start-3">

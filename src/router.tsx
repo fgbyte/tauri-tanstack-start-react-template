@@ -11,6 +11,13 @@ export const getRouter = () => {
 
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
+
+    defaultNotFoundComponent: () => (
+      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+        <h1 className="text-4xl font-bold">404</h1>
+        <p>Page not found</p>
+      </div>
+    ),
   });
 
   return router;
