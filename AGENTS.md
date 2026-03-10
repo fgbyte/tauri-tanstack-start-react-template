@@ -70,10 +70,10 @@ bun build:tauri        # Full Tauri build
 bun build:android      # Android APK build
 
 # Test & Lint
-bun test               # Run Vitest
-bun lint               # Biome check
-bun format             # Biome format
-bun fix                # Biome auto-fix
+bun run test               # Run Vitest
+bun run lint               # Biome check
+bun run format             # Biome format
+bun run fix                # Biome auto-fix
 ```
 
 ## PRERENDERING
