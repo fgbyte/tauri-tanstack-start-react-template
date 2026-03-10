@@ -5,7 +5,7 @@ import { Activity } from "lucide-react";
 import { useCallback, useState } from "react";
 import { FileIcon, GlobeIcon, TanstackLogo } from "../assets/icons";
 import { RoundedButton } from "../components/RoundedButton";
-import { getUser } from "../serverFns/user";
+import { getUser } from "../functions/user";
 
 export const Home: React.FC = () => {
   const [greeted, setGreeted] = useState<string | null>(null);
